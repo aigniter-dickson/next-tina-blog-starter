@@ -1,9 +1,11 @@
 import { TinaProvider, TinaCMS } from 'tinacms'
 import { MarkdownFieldPlugin } from 'react-tinacms-editor'
 
+import type { AppProps /* , AppContext */ } from 'next/app'
+
 import '../styles/index.css'
 
-const MyApp = ({ Component, pageProps }) => {
+const MyApp = ({ Component, pageProps }: AppProps) => {
   const cms = new TinaCMS({
     // enabled: process.env.NODE_ENV !== 'production',
     enabled: true,
