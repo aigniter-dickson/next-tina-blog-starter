@@ -35,17 +35,73 @@ export default function Index({ allPosts }) {
   )
 }
 
-export async function getStaticProps() {
-  const allPosts = getAllPosts([
-    'title',
-    'date',
-    'slug',
-    'author',
-    'coverImage',
-    'excerpt',
-  ])
+// export async function getStaticProps() {
+//   const allPosts = getAllPosts([
+//     'title',
+//     'date',
+//     'slug',
+//     'author',
+//     'coverImage',
+//     'excerpt',
+//   ])
 
-  return {
-    props: { allPosts },
+//   return {
+//     props: { allPosts },
+//   }
+// }
+
+
+/**
+ * Fetch data with getStaticProps based on 'preview' mode
+ */
+export const getStaticProps: import('next').GetStaticProps = async function({
+  preview,
+  previewData,
+}) {
+  console.debug({preview, previewData})
+  if (preview) {
+    const allPosts = getAllPosts([
+      'title',
+      'date',
+      'slug',
+      'author',
+      'coverImage',
+      'excerpt',
+    ])
+
+    return {
+      props: {
+        preview: true,
+        allPosts,
+      }
+    }
+    // return getGithubPreviewProps({
+    //   ...previewData,
+    //   fileRelativePath: 'content/home.json',
+    //   parse: parseJson,
+    // })
+  } else {
+    const allPosts = getAllPosts([
+      'title',
+      'date',
+      'slug',
+      'author',
+      'coverImage',
+      'excerpt',
+    ])
+
+    return {
+      props: {
+        sourceProvider: null,
+        error: null,
+        preview: false,
+        file: {
+          // fileRelativePath: 'content/home.json',
+          // data: (await import('../content/home.json')).default,
+        },
+        allPosts,
+      },
+    }
   }
+  
 }

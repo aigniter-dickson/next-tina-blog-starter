@@ -1,9 +1,19 @@
+import { Modal, PopupModal, ModalBody } from 'tinacms'
 import { useGithubAuthRedirect } from 'react-tinacms-github'
+import { StyleReset } from '@tinacms/styles'
 
-// Our GitHub app redirects back to this page with auth code
 export default function Authorizing() {
-  // Let the main app know, that we received an auth code from the GitHub redirect
   useGithubAuthRedirect()
 
-  return <h2>Authorizing with GitHub, please wait...</h2>
+  return (
+    <StyleReset>
+      <Modal>
+        <PopupModal>
+          <ModalBody padded>
+            <p>Authorizing with Github, Please wait...</p>
+          </ModalBody>
+        </PopupModal>
+      </Modal>
+    </StyleReset>
+  )
 }
