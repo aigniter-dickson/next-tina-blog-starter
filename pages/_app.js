@@ -1,13 +1,22 @@
-import '../styles/index.css'
-import { withTina } from 'tinacms'
+import { TinaProvider, TinaCMS } from 'tinacms'
 import { MarkdownFieldPlugin } from 'react-tinacms-editor'
 
-function MyApp({ Component, pageProps }) {
-  return <Component {...pageProps} />
+import '../styles/index.css'
+
+const MyApp = ({ Component, pageProps }) => {
+  const cms = new TinaCMS({
+    // enabled: process.env.NODE_ENV !== 'production',
+    enabled: true,
+    sidebar: true,
+    toolbar: true,
+    plugins: [MarkdownFieldPlugin],
+  })
+
+  return (
+    <TinaProvider cms={cms}>
+        <Component {...pageProps} />
+    </TinaProvider>
+  )
 }
 
-export default withTina(MyApp, {
-  enabled: true,
-  sidebar: true,
-  plugins: [MarkdownFieldPlugin],
-})
+export default MyApp
